@@ -1,0 +1,5 @@
+{
+    "idf.currentSetup": "/home/px/tools/esp-idf",
+    "idf.flashType": "JTAG",
+    "idf.port": "/dev/ttyACM0"
+}
