@@ -142,6 +142,9 @@ void wifi_event_handler(void* event_handler_arg,esp_event_base_t event_base,int3
                 }
                 snprintf(ssid_value,33,"%s",(char*)ssid);
                 snprintf(password_value,65,"%s",(char*)passwd);
+                nvs_saveSSID(ssid_value);
+                nvs_savePasswd(password_value);
+                ESP_LOGI("NVS","SAVE SSID AND PASSWORD");
                 ESP_ERROR_CHECK(esp_wifi_disconnect());
                 ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA,&wifi_cft));
                 ESP_ERROR_CHECK(esp_wifi_connect());
@@ -170,8 +173,6 @@ static void smartconfig_task(void * parm){
             ESP_LOGI("SmartConfig","SmartConfig over");
             esp_smartconfig_stop();
             smtcfg_done=false;
-            nvs_saveSSID(ssid_value);
-            nvs_savePasswd(password_value);
             vTaskDelete(NULL);
         }
         vTaskDelay(pdMS_TO_TICKS(100));
@@ -220,10 +221,9 @@ void mywifi_init(void){
     if (ssid_value[0]!=0)
     {   
 
-        snprintf(ssid_value,32,"%s",wifi_config.sta.ssid);
-        snprintf(password_value,64,"%s",wifi_config.sta.password);
-
-        ESP_LOGI("WIFI_INIT", "Wi-Fi SSID: %s, Password: %s", wifi_config.sta.ssid, wifi_config.sta.password); //打印Wi-Fi SSID和密码配置
+        memcpy(wifi_config.sta.ssid, ssid_value, sizeof(wifi_config.sta.ssid));
+        memcpy(wifi_config.sta.password, password_value, sizeof(wifi_config.sta.password));
+        ESP_LOGI("NVS", "Wi-Fi SSID: %s, Password: %s", wifi_config.sta.ssid, wifi_config.sta.password); //打印Wi-Fi SSID和密码配置
     }
     else {
         ESP_LOGI("WIFI_INIT", "No Wi-Fi SSID and Password found in NVS, starting SmartConfig..."); //打印未找到Wi-Fi SSID和密码配置
