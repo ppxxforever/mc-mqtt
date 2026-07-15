@@ -1,6 +1,6 @@
 #ifndef __WIFI_H__
 #define __WIFI_H__
 
-void wifi_init(void);
+void mywifi_init(void);
 
 #endif
