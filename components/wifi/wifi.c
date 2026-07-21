@@ -16,7 +16,7 @@
 //smartconfig 状态标志
 static bool smtcfg_stauts=false;
 //配网完成标志
-static bool smtcfg_done=false;
+bool smtcfg_done=false;
 //缓存一份ssid
 static char ssid_value[33] = {0};
 //缓存一份password
@@ -172,7 +172,7 @@ static void smartconfig_task(void * parm){
         {
             ESP_LOGI("SmartConfig","SmartConfig over");
             esp_smartconfig_stop();
-            smtcfg_done=false;
+            smtcfg_stauts=false;
             vTaskDelete(NULL);
         }
         vTaskDelay(pdMS_TO_TICKS(100));
@@ -224,6 +224,7 @@ void mywifi_init(void){
         memcpy(wifi_config.sta.ssid, ssid_value, sizeof(wifi_config.sta.ssid));
         memcpy(wifi_config.sta.password, password_value, sizeof(wifi_config.sta.password));
         ESP_LOGI("NVS", "Wi-Fi SSID: %s, Password: %s", wifi_config.sta.ssid, wifi_config.sta.password); //打印Wi-Fi SSID和密码配置
+        smtcfg_done = true;
     }
     else {
         ESP_LOGI("WIFI_INIT", "No Wi-Fi SSID and Password found in NVS, starting SmartConfig..."); //打印未找到Wi-Fi SSID和密码配置

@@ -1,14 +1,5 @@
 {
-  "idf.currentSetup": "/home/px/tools/esp-idf",
-  "idf.flashType": "JTAG",
-  "idf.port": "/dev/ttyACM0",
-  "idf.openOcdConfigs": [
-    "board/esp32s3-builtin.cfg"
-  ],
-  "idf.customExtraVars": {
-    "IDF_PATH": "/home/px/tools/esp-idf",
-    "IDF_TOOLS_PATH": "/home/px/.espressif",
-    "IDF_PYTHON_ENV_PATH": "/home/px/.espressif/python_env/idf6.0_py3.13_env",
-    "IDF_TARGET": "esp32s3"
-  }
+    "idf.currentSetup": "/home/px/esp-idf",
+    "idf.flashType": "JTAG",
+    "idf.port": "/dev/ttyACM0"
 }
